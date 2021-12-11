@@ -31,7 +31,7 @@ app.get("/patients", async (req, res, next) => {
   try {
     const connection = await client.connect()
     console.log(`Successfully connected to the database`);
-    const db = await connection.db("mongodb");
+    const db = connection.db("mongodb");
     const patients = await db.collection("patients").find({}).toArray();
 
     // db.collection("patients").insertOne()
