@@ -1,4 +1,4 @@
-# Mongos Shell Commands
+# Mongodb Shell Commands
 
 ## Helper commands
 - `db` Prints the current selected database name
@@ -51,3 +51,27 @@ db.patients.find({
     name: "Ramcharan Gupta"
 })
 ```
+
+### Update operation
+- updateOne (Updates a single document. If there are multiple matching documents, it will update only first matching document)
+eg
+```
+db.<collection_name>.updateOne({filter_query}, {updated data}, {options})
+db.patients.updateOne({gender: 'male'}, {$set: { weight: 66}}, {$upsert: true})
+```
+- updateMany (Updates multiple documents that matche the condition/filter query)
+eg
+```
+db.<collection_name>.updateMany({filter_query}, {updated data}, {options})
+db.patients.updateMany({gender: 'male'}, {$set: { weight: 66}}, {$upsert: true})
+```
+
+### Delete operation
+- deleteOne
+- deleteMany
+
+findAndModify
+findOneAndUpdate
+replaceOne
+findOneAndReplace
+findOneAndDelete
