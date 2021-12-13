@@ -1,0 +1,35 @@
+mysql 65535 bytes ~66KB
+mongodb 16MB
+
+id
+name
+email
+phone
+password
+
+id
+patientid
+allergy
+
+id
+patientid
+street
+city
+country
+pincode
+
+_id
+name
+email
+phone
+password
+allergies: [],
+address: {}
+physicians: [ObjectId(), ObjectId()]
+
+_id
+patients: []
+
+_id
+patientId:ObjectId("")
+medications
