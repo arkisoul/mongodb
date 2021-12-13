@@ -4,9 +4,11 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const personsRouter = require("./routes/persons");
 
 const app = express();
 
@@ -23,17 +25,25 @@ app.use(express.static(path.join(__dirname, "public")));
 // database connection
 const mongoUri =
   "mongodb+srv://learning:learning123@learning.zejua.mongodb.net/mongodb?retryWrites=true&w=majority";
-const client = new MongoClient(mongoUri);
-app.use((req, res, next) => {
-  client.connect().then((mongoClient) => {
-    const db = mongoClient.db("mongodb");
-    res.locals.db = db;
-    next();
-  })
+mongoose.connect(mongoUri, (err) => {
+  if(err) {
+    console.error(`Mongoose connection error!`, err)
+    return false;
+  }
+  console.log(`Successfully connected to the mongodb server`);
 })
+// const client = new MongoClient(mongoUri);
+// app.use((req, res, next) => {
+//   client.connect().then((mongoClient) => {
+//     const db = mongoClient.db("mongodb");
+//     res.locals.db = db;
+//     next();
+//   })
+// })
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/persons", personsRouter);
 app.get("/patients", async (req, res, next) => {
   try {
     const patients = await res.locals.db.collection("patients").find({}).toArray();
