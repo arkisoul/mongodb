@@ -24,15 +24,19 @@ app.use(express.static(path.join(__dirname, "public")));
 const mongoUri =
   "mongodb+srv://learning:learning123@learning.zejua.mongodb.net/mongodb?retryWrites=true&w=majority";
 const client = new MongoClient(mongoUri);
+app.use((req, res, next) => {
+  client.connect().then((mongoClient) => {
+    const db = mongoClient.db("mongodb");
+    res.locals.db = db;
+    next();
+  })
+})
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.get("/patients", async (req, res, next) => {
   try {
-    const connection = await client.connect()
-    console.log(`Successfully connected to the database`);
-    const db = connection.db("mongodb");
-    const patients = await db.collection("patients").find({}).toArray();
+    const patients = await res.locals.db.collection("patients").find({}).toArray();
 
     // db.collection("patients").insertOne()
     // db.collection("patients").insertMany()
