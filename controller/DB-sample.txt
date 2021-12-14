@@ -1,6 +1,8 @@
 mysql 65535 bytes ~66KB
 mongodb 16MB
 
+BSON Binary JSON
+
 id
 name
 email
